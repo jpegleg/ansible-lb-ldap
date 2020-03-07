@@ -1,14 +1,8 @@
 ---
 
-- name: Update and Upgrade centos and start openldap base conf
+- name: Update and Upgrade centos
   hosts: centos7mirrors
   tasks:
-
-  - name: stop slapd
-    systemd:
-      state: stopped
-      name: slapd
-    ignore_errors: yes
 
   - name: upgrade all packages
     yum:
@@ -67,6 +61,22 @@
       group: root
       mode: '0644'
 
+  - name: deploy mod_syncprov.ldif
+    copy:
+      src: /srv/mod_syncprov.ldif
+      dest: /root/mod_syncprov.ldif
+      owner: root
+      group: root
+      mode: '0644'
+
+  - name: deploy syncprov.ldif
+    copy:
+      src: /srv/syncprov.ldif
+      dest: /root/syncprov.ldif
+      owner: root
+      group: root
+      mode: '0644'
+
   - name: set firewalld to allow ldap
     shell: firewall-cmd --add-service=ldap --permanent
     args:
@@ -120,3 +130,4 @@
       owner: root
       group: root
       mode: '0644'
+

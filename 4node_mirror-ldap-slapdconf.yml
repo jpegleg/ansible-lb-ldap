@@ -1,0 +1,88 @@
+---
+
+- name: Update and Upgrade centos
+  hosts: centos7mirrors
+  tasks:
+
+  - name: upgrade all packages
+    yum:
+      name: '*'
+      state: latest
+
+  - name: install openldap-servers
+    yum:
+      name: openldap-servers
+      state: latest
+
+  - name: install openldap-clients
+    yum:
+      name: openldap-clients
+      state: latest
+
+  - name: deploy DB_CONFIG
+    copy:
+      src: /srv/DB_CONFIG
+      dest: /var/lib/ldap/DB_CONFIG
+      owner: ldap
+      group: ldap
+      mode: '0644'
+
+  - name: start slapd
+    systemd:
+      state: started
+      name: slapd
+
+  - name: enable slapd
+    systemd:
+      enabled: yes
+      name: slapd
+
+
+- name: set the first master 01
+  hosts: master01
+  tasks:
+
+  - name: deploy set-mirror1 slapd.conf
+    copy:
+      src: /srv/set-mirror1.conf
+      dest: /etc/openldap/slapd.conf
+      owner: ldap
+      group: ldap
+      mode: '0644'
+
+- name: set the second master 02
+  hosts: master02
+  tasks:
+
+  - name: deploy set-mirror2 slapd.conf
+    copy:
+      src: /srv/set-mirror2.conf
+      dest: /etc/openldap/slapd.conf
+      owner: ldap
+      group: ldap
+      mode: '0644'
+
+- name: set the second master 03
+  hosts: master03
+  tasks:
+
+  - name: deploy set-mirror3 slapd.conf
+    copy:
+      src: /srv/set-mirror3.conf
+      dest: /etc/openldap/slapd.conf
+      owner: ldap
+      group: ldap
+      mode: '0644'
+
+- name: set the second master 04
+  hosts: master04
+  tasks:
+
+  - name: deploy set-mirror4 slapd.conf
+    copy:
+      src: /srv/set-mirror4.conf
+      dest: /etc/openldap/slapd.conf
+      owner: ldap
+      group: ldap
+      mode: '0644'
+

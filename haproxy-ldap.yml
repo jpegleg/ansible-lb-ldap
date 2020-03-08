@@ -19,16 +19,6 @@
     args:
       executable: /bin/bash
 
-  - name: set firewalld to allow https
-    shell: firewall-cmd --add-service=https --permanent
-    args:
-      executable: /bin/bash
-
-  - name: set firewalld to allow http
-    shell: firewall-cmd --add-service=http --permanent
-    args:
-      executable: /bin/bash
-
   - name: set firewalld to reload
     shell: firewall-cmd --reload
     args:

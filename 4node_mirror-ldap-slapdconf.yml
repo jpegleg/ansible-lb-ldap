@@ -27,17 +27,6 @@
       group: ldap
       mode: '0644'
 
-  - name: start slapd
-    systemd:
-      state: started
-      name: slapd
-
-  - name: enable slapd
-    systemd:
-      enabled: yes
-      name: slapd
-
-
 - name: set the first master 01
   hosts: master01
   tasks:
@@ -86,3 +75,16 @@
       group: ldap
       mode: '0644'
 
+- name: start and enable slapd
+  hosts: centos7mirrors
+  tasks:
+
+  - name: start slapd
+    systemd:
+      state: started
+      name: slapd
+
+  - name: enable slapd
+    systemd:
+      enabled: yes
+      name: slapd

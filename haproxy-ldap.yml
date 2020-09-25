@@ -1,7 +1,7 @@
 ---
 -
-- name: Update and Upgrade centos
   hosts: haproxy
+  gather_facts: no
   tasks:
 
   - name: upgrade all packages
@@ -23,11 +23,6 @@
     shell: firewall-cmd --reload
     args:
       executable: /bin/bash
-
-
-- name: deploy config setup
-  hosts: haproxy
-  tasks:
 
   - name: deploy haproxy.cfg
     copy:

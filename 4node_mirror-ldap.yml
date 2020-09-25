@@ -1,6 +1,6 @@
 ---
 
-- name: Update and Upgrade centos
+- name: set the first master 01
   hosts: centos7mirrors
   tasks:
 
